@@ -1,0 +1,1 @@
+# Proxy работа с class
