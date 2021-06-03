@@ -1,36 +1,17 @@
-// Object
-const person = {
-  name: 'Константин',
-  age: 32,
-  job: 'Fullstack',
+// Wrapper
+
+const withDefaultValue = (target, defaultValue) => {
+  return new Proxy(target, {
+    get: (obj, prop) => (prop in obj ? obj[prop] : defaultValue),
+  });
 };
 
-const op = new Proxy(person, {
-  get(target, prop) {
-    // console.log(`Getting prop ${prop}`);
+const position = withDefaultValue(
+  {
+    x: 24,
+    y: 42,
+  },
+  0 // Значение по умолчанию
+);
 
-    if (!(prop in target)) {
-      return prop
-        .split('_')
-        .map((p) => target[p])
-        .join(' ');
-    }
-
-    return target[prop];
-  },
-  set(target, prop, value) {
-    if (prop in target) {
-      target[prop] = value;
-    } else {
-      throw new Error(`No ${prop} field in target`);
-    }
-  },
-  has(target, prop) {
-    return ['age', 'job'].includes(prop);
-  },
-  deleteProperty(target, prop) {
-    console.log('Deleting... ', prop);
-    delete target[prop];
-    return true;
-  },
-});
+console.log(position);
