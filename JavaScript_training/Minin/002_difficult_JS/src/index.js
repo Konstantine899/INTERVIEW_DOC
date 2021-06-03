@@ -1,32 +1,19 @@
-// Optimization
+// const myNumber = 42;
+// localStorage.removeItem('number');
+// console.log(localStorage.getItem('number'));
+// localStorage.setItem('number', myNumber);
+// console.log(localStorage.getItem('number'));
+// localStorage.clear();
 
-const IndexedArray = new Proxy(Array, {
-  construct(target, [args]) {
-    const index = {};
+const object = {
+  name: 'Max',
+  age: 29,
+};
 
-    args.forEach((item) => (index[item.id] = item));
+// localStorage.setItem('person', JSON.stringify(object));
 
-    return new Proxy(new target(...args), {
-      get(arr, prop) {
-        switch (prop) {
-          case 'push':
-            return (item) => {
-              index[item.id] = item;
-              arr[prop].call(arr, item);
-            };
-          case 'findById':
-            return (id) => index[id];
-          default:
-            return arr[prop];
-        }
-      },
-    });
-  },
-});
+const raw = localStorage.getItem('person');
+const person = JSON.parse(raw);
+person.name = 'Konstantine';
 
-const users = new IndexedArray([
-  { id: 1, name: 'Konstantine', job: 'Fullstack', age: 25 },
-  { id: 2, name: 'Elena', job: 'Student', age: 22 },
-  { id: 3, name: 'Victor', job: 'Backend', age: 23 },
-  { id: 4, name: 'Vasilisa', job: 'Teacher', age: 24 },
-]);
+console.log(person);
