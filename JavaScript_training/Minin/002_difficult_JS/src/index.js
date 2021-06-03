@@ -1,17 +1,15 @@
-// Wrapper
+// Hidden properties
 
-const withDefaultValue = (target, defaultValue) => {
+const withHiddenProps = (target, prefix = '_') => {
   return new Proxy(target, {
-    get: (obj, prop) => (prop in obj ? obj[prop] : defaultValue),
+    has: (obj, prop) => prop in obj && !prop.startsWith(prefix),
+    ownKeys: (obj) => Reflect.ownKeys(obj).filter((p) => !p.startsWith(prefix)),
+    get: (obj, prop, receiver) => (prop in receiver ? obj[prop] : void 0),
   });
 };
 
-const position = withDefaultValue(
-  {
-    x: 24,
-    y: 42,
-  },
-  0 // Значение по умолчанию
-);
-
-console.log(position);
+const data = withHiddenProps({
+  name: 'Konstantine',
+  age: 32,
+  _uid: '123123123123',
+});
