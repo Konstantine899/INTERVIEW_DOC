@@ -5,15 +5,25 @@
 // console.log(localStorage.getItem('number'));
 // localStorage.clear();
 
-const object = {
-  name: 'Max',
-  age: 29,
-};
+//====================================================================
 
-// localStorage.setItem('person', JSON.stringify(object));
+// const object = {
+//   name: 'Max',
+//   age: 29,
+// };
 
-const raw = localStorage.getItem('person');
-const person = JSON.parse(raw);
-person.name = 'Konstantine';
+// // localStorage.setItem('person', JSON.stringify(object));
 
-console.log(person);
+// const raw = localStorage.getItem('person');
+// const person = JSON.parse(raw);
+// person.name = 'Konstantine';
+
+// console.log(person);
+
+//================================================================
+
+window.addEventListener('storage', (event) => {
+  console.log(event);
+});
+
+// window.onstorage = () => {}
